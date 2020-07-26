@@ -1,0 +1,16 @@
+<snippet>
+	<content><![CDATA[
+vector<int> get_primes(int n) {
+	vector<bool> isp(n, true);
+	vector<int> res;
+	FOR (i, 2, n) if (isp[i]) {
+		for (LL k = 1LL * i * i ; k < n ; k += i) isp[k] = false;
+		res.push_back(i);
+	}
+	return res;
+}
+
+]]></content>
+	<tabTrigger>GET primes</tabTrigger>
+	<scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,41 @@
+<snippet>
+	<content><![CDATA[
+template <typename T> struct matrix4 {
+	T a00, a01, a02, a03, a10, a11, a12, a13, a20, a21, a22, a23, a30, a31, a32, a33;
+
+	matrix4() { a00 = a01 = a02 = a03 = a10 = a11 = a12 = a13 = a20 = a21 = a22 = a23 = a30 = a31 = a32 = a33 = 0; }
+	matrix4(T a00, T a01, T a02, T a03, T a10, T a11, T a12, T a13, T a20, T a21, T a22, T a23, T a30, T a31, T a32, T a33) { this->a00 = a00; this->a01 = a01; this->a02 = a02; this->a03 = a03; this->a10 = a10; this->a11 = a11; this->a12 = a12; this->a13 = a13; this->a20 = a20; this->a21 = a21; this->a22 = a22; this->a23 = a23; this->a30 = a30; this->a31 = a31; this->a32 = a32; this->a33 = a33; }
+
+	static matrix4<T> zero;
+	static matrix4<T> identity;
+
+	matrix4 const operator+ (const matrix4& other) {
+		return matrix4(
+			a00 + other.a00, a01 + other.a01, a02 + other.a02, a03 + other.a03,
+			a10 + other.a10, a11 + other.a11, a12 + other.a12, a13 + other.a13,
+			a20 + other.a20, a21 + other.a21, a22 + other.a22, a23 + other.a23,
+			a30 + other.a30, a31 + other.a31, a32 + other.a32, a33 + other.a33);
+	}
+
+	matrix4 const operator- (const matrix4& other) {
+		return matrix4(
+			a00 - other.a00, a01 - other.a01, a02 - other.a02, a03 - other.a03,
+			a10 - other.a10, a11 - other.a11, a12 - other.a12, a13 - other.a13,
+			a20 - other.a20, a21 - other.a21, a22 - other.a22, a23 - other.a23,
+			a30 - other.a30, a31 - other.a31, a32 - other.a32, a33 - other.a33);
+	}
+
+	matrix4 const operator* (const matrix4& other) {
+		return matrix4(
+			a00 * other.a00 + a01 * other.a10 + a02 * other.a20 + a03 * other.a30, a00 * other.a01 + a01 * other.a11 + a02 * other.a21 + a03 * other.a31, a00 * other.a02 + a01 * other.a12 + a02 * other.a22 + a03 * other.a32, a00 * other.a03 + a01 * other.a13 + a02 * other.a23 + a03 * other.a33,
+			a10 * other.a00 + a11 * other.a10 + a12 * other.a20 + a13 * other.a30, a10 * other.a01 + a11 * other.a11 + a12 * other.a21 + a13 * other.a31, a10 * other.a02 + a11 * other.a12 + a12 * other.a22 + a13 * other.a32, a10 * other.a03 + a11 * other.a13 + a12 * other.a23 + a13 * other.a33,
+			a20 * other.a00 + a21 * other.a10 + a22 * other.a20 + a23 * other.a30, a20 * other.a01 + a21 * other.a11 + a22 * other.a21 + a23 * other.a31, a20 * other.a02 + a21 * other.a12 + a22 * other.a22 + a23 * other.a32, a20 * other.a03 + a21 * other.a13 + a22 * other.a23 + a23 * other.a33,
+			a30 * other.a00 + a31 * other.a10 + a32 * other.a20 + a33 * other.a30, a30 * other.a01 + a31 * other.a11 + a32 * other.a21 + a33 * other.a31, a30 * other.a02 + a31 * other.a12 + a32 * other.a22 + a33 * other.a32, a30 * other.a03 + a31 * other.a13 + a32 * other.a23 + a33 * other.a33);
+	}
+};
+template <typename T> matrix4<T> matrix4<T>::zero = matrix4<T>();
+template <typename T> matrix4<T> matrix4<T>::identity = matrix4<T>(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+]]></content>
+	<tabTrigger>MX4</tabTrigger>
+	<scope>source.c++</scope>
+</snippet>

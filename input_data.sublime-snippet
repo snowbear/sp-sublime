@@ -1,0 +1,10 @@
+<snippet>
+	<content><![CDATA[
+input
+${1:}
+output
+${2:}
+]]></content>
+	<tabTrigger>IN</tabTrigger>
+	<scope>text.plain</scope>
+</snippet>

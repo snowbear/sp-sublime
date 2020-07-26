@@ -1,0 +1,102 @@
+<snippet>
+	<content><![CDATA[
+template <typename T, typename TCoord>
+struct Tree {
+	int gp2(int n) {
+		int x = 1;
+		while (x < n) x += x;
+		return x;
+	}
+
+	int n;
+	T zero_value;
+	vector<T> data;
+	vector<TCoord> leftmost;
+	vector<TCoord> rightmost;
+	function<T(T, T)> combine;
+
+	void init(function<T(T,T)> combine, T zero_value) {
+		this->combine = combine;
+		this->zero_value = zero_value;
+		for (int i = n - 1 ; i ; i--) data[i] = combine(data[i + i] , data[i + i + 1]), leftmost[i] = leftmost[i + i], rightmost[i] = rightmost[i + i + 1];
+	}
+
+	void init_plain_coord() {
+		leftmost = rightmost = vector<TCoord>(n + n, (TCoord) 1e20);
+		for (int i = 0 ; i < n ; i++) leftmost[n + i] = rightmost[n + i] = i;
+	}
+
+	void init_compressed_coord(vector<TCoord> &coords) {
+		leftmost = rightmost = vector<TCoord>(n + n, (TCoord) 1e20);
+		for (int i = 0 ; i < coords.size() ; i++) leftmost[n + i] = rightmost[n + i] = coords[i];
+	}
+
+	Tree() { }
+
+	Tree(int n, function<T(T,T)> combine, T zero_value) {
+		this->n = n = gp2(n);
+		data.assign(n + n, zero_value);
+
+		init_plain_coord();
+		init(combine, zero_value);
+	}
+
+	Tree(vector<T> &v, function<T(T,T)> combine, T zero_value) {
+		n = gp2(v.size());
+		data.assign(n + n, zero_value);
+		for (int i = 0 ; i < v.size() ; i++) data[n + i] = v[i];
+
+		init_plain_coord();
+		init(combine, zero_value);
+	}
+
+	Tree(vector<TCoord> coords, function<T(T, T)> combine, T zero_value, bool dummy) {
+		sort(coords.begin(), coords.end());
+		coords.resize(unique(coords.begin(), coords.end()) - coords.begin());
+		n = gp2(coords.size());
+		data.assign(n + n, zero_value);
+	
+		init_compressed_coord(coords);
+		init(combine, zero_value);
+	}
+
+	T getValue(TCoord l, TCoord r, int i = 1) {
+		if (leftmost[i] >= l && rightmost[i] <= r) return data[i];
+		if (rightmost[i] < l || leftmost[i] > r) return zero_value;
+		return combine(getValue(l, r, i + i), getValue(l, r, i + i + 1));
+	}
+
+	void set(TCoord x, T value) {
+		int i = 1;
+		while (i < n) {
+			i += i;
+			if (rightmost[i] < x) i++;
+		}
+		data[i] = value;
+		i /= 2;
+
+		while (i) {
+			data[i] = combine(data[i + i], data[i + i + 1]);
+			i /= 2;
+		}
+	}
+
+	void change(TCoord x, function<T(T)> changer) {
+		int i = 1;
+		while (i < n) {
+			i += i;
+			if (rightmost[i] < x) i++;
+		}
+		data[i] = changer(data[i]);
+		i /= 2;
+
+		while (i) {
+			data[i] = combine(data[i + i], data[i + i + 1]);
+			i /= 2;
+		}
+	}	
+};
+]]></content>
+	<tabTrigger>SEGMENT TREE</tabTrigger>
+	<scope>source.c++</scope>
+</snippet>

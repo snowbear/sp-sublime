@@ -1,0 +1,36 @@
+<snippet>
+	<content><![CDATA[
+template <typename T> struct matrix2 {
+	T a00, a01, a10, a11;
+
+	matrix2() { a00 = a01 = a10 = a11 = 0; }
+	matrix2(T a00, T a01, T a10, T a11) { this->a00 = a00; this->a01 = a01; this->a10 = a10; this->a11 = a11; }
+
+	static matrix2<T> zero;
+	static matrix2<T> identity;
+
+	matrix2 const operator+ (const matrix2& other) {
+		return matrix2(
+			a00 + other.a00, a01 + other.a01,
+			a10 + other.a10, a11 + other.a11);
+	}
+
+	matrix2 const operator- (const matrix2& other) {
+		return matrix2(
+			a00 - other.a00, a01 - other.a01,
+			a10 - other.a10, a11 - other.a11);
+	}
+
+	matrix2 const operator* (const matrix2& other) {
+		return matrix2(
+			a00 * other.a00 + a01 * other.a10, a00 * other.a01 + a01 * other.a11,
+			a10 * other.a00 + a11 * other.a10, a10 * other.a01 + a11 * other.a11);
+	}
+};
+template <typename T> matrix2<T> matrix2<T>::zero = matrix2<T>();
+template <typename T> matrix2<T> matrix2<T>::identity = matrix2<T>(1, 0, 0, 1);
+]]>
+</content>
+	<tabTrigger>MX2</tabTrigger>
+	<scope>source.c++</scope>
+</snippet>

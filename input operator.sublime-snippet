@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+istream& operator >> (istream& is, ${1:} &x) {
+	return is >> x${2:};
+}
+]]></content>
+	<tabTrigger>INPUT operator</tabTrigger>
+	<scope>source.c++</scope>
+</snippet>

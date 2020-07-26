@@ -1,0 +1,31 @@
+<snippet>
+	<content><![CDATA[
+template <class T>
+struct infinum {
+	bool is_finite;
+	bool is_infinite;
+	T value;
+
+	infinum(bool is_finite, T value) : is_finite(is_finite), is_infinite(!is_finite), value(value) { }
+	infinum(T value) : infinum(true, value) { }
+
+	static infinum infinity() {
+		return infinum(false, 0);
+	}
+
+	infinum operator + (const infinum &b) const { return infinum(is_finite && b.is_finite, value + b.value); }
+	infinum operator - (const T &b) const { return infinum(is_finite, value - b); }
+	infinum operator - (const infinum<T> &b) const { assert(b.is_finite); return infinum(is_finite, value - b.value); }
+
+	bool operator < (const infinum &b) const { if (is_finite != b.is_finite) return is_finite; else if (is_finite) return value < b.value; else return false; }
+	bool operator == (const infinum &b) const { return is_finite == b.is_finite && (is_infinite || value == b.value); }
+};
+
+template<class T> infinum<T> operator - (T a, const infinum<T> b) { assert(b.is_finite); return a - b.value; }
+template<class T> ostream& operator << (ostream& os, const infinum<T> &x) { if (x.is_finite) return os << x.value; else return os << "[INF]"; }
+
+typedef infinum<LL> LL_inf;
+]]></content>
+	<tabTrigger>INFINUM</tabTrigger>
+	<scope>source.c++</scope>
+</snippet>

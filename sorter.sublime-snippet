@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+bool ${1:}(const ${2:} &x1, const ${2:} &x2) {
+	return x1.${3:} < x2.${3:};
+}
+]]></content>
+	<tabTrigger>SORTER</tabTrigger>
+	<scope>source.c++</scope>
+</snippet>

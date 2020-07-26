@@ -1,0 +1,39 @@
+<snippet>
+	<content><![CDATA[
+template <typename T> struct matrix3 {
+	T a00, a01, a02, a10, a11, a12, a20, a21, a22;
+
+	matrix3() { a00 = a01 = a02 = a10 = a11 = a12 = a20 = a21 = a22 = 0; }
+	matrix3(T a00, T a01, T a02, T a10, T a11, T a12, T a20, T a21, T a22) { this->a00 = a00; this->a01 = a01; this->a02 = a02; this->a10 = a10; this->a11 = a11; this->a12 = a12; this->a20 = a20; this->a21 = a21; this->a22 = a22; }
+
+	static matrix3<T> zero;
+	static matrix3<T> identity;
+
+	matrix3 const operator+ (const matrix3& other) {
+		return matrix3(
+			a00 + other.a00, a01 + other.a01, a02 + other.a02,
+			a10 + other.a10, a11 + other.a11, a12 + other.a12,
+			a20 + other.a20, a21 + other.a21, a22 + other.a22);
+	}
+
+	matrix3 const operator- (const matrix3& other) {
+		return matrix3(
+			a00 - other.a00, a01 - other.a01, a02 - other.a02,
+			a10 - other.a10, a11 - other.a11, a12 - other.a12,
+			a20 - other.a20, a21 - other.a21, a22 - other.a22);
+	}
+
+	matrix3 const operator* (const matrix3& other) {
+		return matrix3(
+			a00 * other.a00 + a01 * other.a10 + a02 * other.a20, a00 * other.a01 + a01 * other.a11 + a02 * other.a21, a00 * other.a02 + a01 * other.a12 + a02 * other.a22,
+			a10 * other.a00 + a11 * other.a10 + a12 * other.a20, a10 * other.a01 + a11 * other.a11 + a12 * other.a21, a10 * other.a02 + a11 * other.a12 + a12 * other.a22,
+			a20 * other.a00 + a21 * other.a10 + a22 * other.a20, a20 * other.a01 + a21 * other.a11 + a22 * other.a21, a20 * other.a02 + a21 * other.a12 + a22 * other.a22);
+	}
+};
+template <typename T> matrix3<T> matrix3<T>::zero = matrix3<T>();
+template <typename T> matrix3<T> matrix3<T>::identity = matrix3<T>(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+]]></content>
+	<tabTrigger>MX3</tabTrigger>
+	<scope>source.c++</scope>
+</snippet>

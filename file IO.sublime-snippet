@@ -1,0 +1,10 @@
+<snippet>
+	<content><![CDATA[
+#ifdef ONLINE_JUDGE
+freopen("${1:}.in", "rt", stdin);
+freopen("${1:}.out", "wt", stdout);
+#endif
+]]></content>
+	<tabTrigger>FILE IO</tabTrigger>
+	<scope>source.c++</scope>
+</snippet>
